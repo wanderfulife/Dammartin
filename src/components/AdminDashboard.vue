@@ -133,23 +133,10 @@ const downloadData = async () => {
     const data = querySnapshot.docs.map((doc) => {
       const docData = doc.data();
       return headerOrder.reduce((acc, key) => {
-        if (
-          key.includes("_COMMUNE") ||
-          key.includes("_CODE_INSEE") ||
-          key.includes("_COMMUNE_LIBRE")
-        ) {
-          if (docData.Q4 === 1) {
-            // Special case for Q7 = 1 (Plaisir - Grignon)
-            if (key === "Q5_COMMUNE") {
-              acc[key] = "CROIX";
-            } else if (key === "Q5_CODE_INSEE") {
-              acc[key] = "59170";
-            } else {
-              acc[key] = "";
-            }
-          } else {
+        if (key.includes("_COMMUNE") || key.includes("_CODE_INSEE") ||key.includes("_COMMUNE_LIBRE")) {
+     
             acc[key] = docData[key] || "";
-          }
+
         } else {
           // Include all responses, even if they are 0
           acc[key] = docData[key] !== undefined ? docData[key] : "";

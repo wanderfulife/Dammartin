@@ -41,14 +41,14 @@ export const questions = [
 		id: "Q3",
 		text: "Par quel mode de transport êtes-vous venus jusqu'à la gare ? ",
 		options: [
-			{ id: 1, text: "à pied exclusivement", next: "Q4" },
-			{ id: 2, text: "en voiture puis bus", next: "Q4" },
+			{ id: 1, text: "à pied exclusivement", next: "Q11" },
+			{ id: 2, text: "en voiture puis bus", next: "Q10" },
 			{ id: 3, text: "en bus/car exclusivement", next: "Q4" },
-			{ id: 4, text: "en voiture conducteur", next: "Q4" },
-			{ id: 5, text: "en voiture passager (covoiturage ou dépose)", next: "Q4" },
-			{ id: 6, text: "en vélo", next: "Q4" },
-			{ id: 7, text: "en deux-roues motorisés", next: "Q4" },
-			{ id: 8, text: "en train", next: "Q4" },
+			{ id: 4, text: "en voiture conducteur", next: "Q5" },
+			{ id: 5, text: "en voiture passager (covoiturage ou dépose)", next: "Q9" },
+			{ id: 6, text: "en vélo", next: "Q11" },
+			{ id: 7, text: "en deux-roues motorisés", next: "Q11" },
+			{ id: 8, text: "en train", next: "Q11" },
 			{ id: 9, text: "Autre : Précisez", next: "Q3Precision" }
 		]
 	},
@@ -63,17 +63,17 @@ export const questions = [
 		id: "Q4",
 		text: "Si vous êtes venus en bus, préciser la ligne de bus utilisée : ",
 		options: [
-			{ id: 1, text: "2122", next: "Q5" },
-			{ id: 2, text: "2103", next: "Q5" },
-			{ id: 3, text: "2107", next: "Q5" },
-			{ id: 4, text: "2108", next: "Q5" },
-			{ id: 5, text: "2109", next: "Q5" },
-			{ id: 6, text: "2110", next: "Q5" },
-			{ id: 7, text: "2111", next: "Q5" },
-			{ id: 8, text: "2153", next: "Q5" },
-			{ id: 9, text: "2154", next: "Q5" },
-			{ id: 10, text: "Filéo", next: "Q5" },
-			{ id: 11, text: "TAD de la Goele 1 et 2", next: "Q5" }
+			{ id: 1, text: "2122", next: "Q11" },
+			{ id: 2, text: "2103", next: "Q11" },
+			{ id: 3, text: "2107", next: "Q11" },
+			{ id: 4, text: "2108", next: "Q11" },
+			{ id: 5, text: "2109", next: "Q11" },
+			{ id: 6, text: "2110", next: "Q11" },
+			{ id: 7, text: "2111", next: "Q11" },
+			{ id: 8, text: "2153", next: "Q11" },
+			{ id: 9, text: "2154", next: "Q11" },
+			{ id: 10, text: "Filéo", next: "Q11" },
+			{ id: 11, text: "TAD de la Goele 1 et 2", next: "Q11" }
 		]
 	},
 	{
@@ -124,19 +124,19 @@ export const questions = [
 		id: "Q8",
 		text: "Si vous êtes venus en voiture comme conducteur quelle est votre durée habituelle de stationnement?",
 		options: [
-			{ id: 1, text: "Courte durée (<2h)", next: "Q9" },
-			{ id: 2, text: "Moyenne durée (2 à 6h)", next: "Q9" },
-			{ id: 3, text: "Longue durée (>6h)", next: "Q9" },
-			{ id: 4, text: "Très longue durée (>12h)", next: "Q9" }	
+			{ id: 1, text: "Courte durée (<2h)", next: "Q11" },
+			{ id: 2, text: "Moyenne durée (2 à 6h)", next: "Q11" },
+			{ id: 3, text: "Longue durée (>6h)", next: "Q11" },
+			{ id: 4, text: "Très longue durée (>12h)", next: "Q11" }	
 		]
 	},
 	{
 		id: "Q9",
 		text: "Si vous êtes venus en voiture comme passager Où avez-vous été déposé ?",
 		options: [
-			{ id: 1, text: "sur les places de dépose minute devant la gare", next: "Q10" },
-			{ id: 2, text: "devant le bâtiment voyageurs par la voirie dépose minute", next: "Q10" },
-			{ id: 3, text: "devant le bâtiment voyageurs par la voirie gare routière", next: "Q10" },
+			{ id: 1, text: "sur les places de dépose minute devant la gare", next: "Q11" },
+			{ id: 2, text: "devant le bâtiment voyageurs par la voirie dépose minute", next: "Q11" },
+			{ id: 3, text: "devant le bâtiment voyageurs par la voirie gare routière", next: "Q11" },
 			{ id: 4, text: "Autre : Précisez", next: "Q9Precision" }
 		]
 	},
@@ -144,7 +144,7 @@ export const questions = [
 		id: "Q9Precision",
 		text: "Précisez",
 		freeText: true,
-		next: "Q10"
+		next: "Q11"
 	},
 	{
 		id: "Q10",
