@@ -83,8 +83,8 @@ export const questions = [
 			{ id: 1, text: "Parking relais Pasteur", next: "Q6" },
 			{ id: 2, text: "Parking relais Europe", next: "Q6" },
 			{ id: 3, text: "Parking relais Sud", next: "Q6" },
-			{ id: 4, text: "Stationnement sur voirie", next: "Q6" },
-			{ id: 5, text: "Sur les places de taxi/dépose minute devant la gare", next: "Q6" },
+			{ id: 4, text: "Stationnement sur voirie", next: "Q7" },
+			{ id: 5, text: "Sur les places de taxi/dépose minute devant la gare", next: "Q7" },
 			{ id: 6, text: "Autre : Précisez", next: "Q5Precision" }
 		]
 	},
@@ -92,14 +92,14 @@ export const questions = [
 		id: "Q5Precision",
 		text: "Précisez",
 		freeText: true,
-		next: "Q6"
+		next: "Q7"
 	},
 	{
 		id: "Q6",
 		text: "Si vous avez stationné dans un des parkings relais, disposez-vous d'un abonnement ?",
 		options: [
-			{ id: 1, text: "Oui", next: "Q7" },
-			{ id: 2, text: "Non", next: "Q7" },
+			{ id: 1, text: "Oui", next: "Q8" },
+			{ id: 2, text: "Non", next: "Q8" },
 		]
 	},
 	{
