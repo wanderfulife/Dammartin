@@ -105,15 +105,16 @@ export const questions = [
 	{
 		id: "Q7",
 		text: "Si vous êtes venus en voiture comme conducteur et que vous ne stationnez pas dans un des trois parkings relais. Pour quelle raison n'utilisez vous pas les parkings relais (choix multiples) ?",
+		allowMultiple: true,
 		options: [
-			{ id: 1, text: "Manque de place de stationnement disponible", next: "Q8" },
-			{ id: 2, text: "Absence d'abonnement disponible", next: "Q8" },
-			{ id: 3, text: "Pas d'abonnement Navigo annuel permettant d'accéder gratuitement aux parkings", next: "Q8" },
-			{ id: 4, text: "Coût du stationnement", next: "Q8" },
-			{ id: 5, text: "Dysfonctionnement technique", next: "Q8" },
-			{ id: 6, text: "Autre", next: "Q7Precision" }
+		  { id: 1, text: "Manque de place de stationnement disponible", next: "Q8" },
+		  { id: 2, text: "Absence d'abonnement disponible", next: "Q8" },
+		  { id: 3, text: "Pas d'abonnement Navigo annuel permettant d'accéder gratuitement aux parkings", next: "Q8" },
+		  { id: 4, text: "Coût du stationnement", next: "Q8" },
+		  { id: 5, text: "Dysfonctionnement technique", next: "Q8" },
+		  { id: 6, text: "Autre", next: "Q7Precision" }
 		]
-	},
+	  },
 	{
 		id: "Q7Precision",
 		text: "Précisez",

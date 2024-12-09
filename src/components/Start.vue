@@ -21,7 +21,14 @@
 
       <!-- Start Survey Step -->
       <div v-else-if="currentStep === 'start'" class="start-survey-container">
-        <h2>Bonjour, pour mieux connaître les usages du pôle gare de Dammartin Juilly Saint-Mard,<br> la communauté d'agglomération<br> Roissy Pays de France souhaiterait en savoir plus sur votre déplacement en cours.<br> Acceptez-vous de répondre à quelques questions ?</h2>
+        <h2>
+          Bonjour, pour mieux connaître les usages du pôle gare de Dammartin
+          Juilly Saint-Mard,<br />
+          la communauté d'agglomération<br />
+          Roissy Pays de France souhaiterait en savoir plus sur votre
+          déplacement en cours.<br />
+          Acceptez-vous de répondre à quelques questions ?
+        </h2>
         <button @click="startSurvey" class="btn-next">
           COMMENCER QUESTIONNAIRE
         </button>
@@ -32,9 +39,38 @@
         <div class="question-container" v-if="currentQuestion">
           <h2>{{ currentQuestion.text }}</h2>
 
-          <!-- Standard options -->
+          <!-- Multiple Choice Question (Q7) -->
           <div
-            v-if="
+            v-if="currentQuestion?.allowMultiple"
+            class="multiple-choice-container"
+          >
+            <div
+              v-for="(option, index) in currentQuestionOptions"
+              :key="index"
+              class="option-wrapper"
+            >
+              <label class="checkbox-label">
+                <input
+                  type="checkbox"
+                  :value="option.id"
+                  v-model="multipleAnswers"
+                  class="checkbox-input"
+                />
+                <span class="option-text">{{ option.text }}</span>
+              </label>
+            </div>
+            <button
+              @click="handleMultipleAnswers"
+              class="btn-next"
+              :disabled="!multipleAnswers.length"
+            >
+              Suivant
+            </button>
+          </div>
+
+          <!-- Standard Single Choice Questions -->
+          <div
+            v-else-if="
               !currentQuestion.freeText && !currentQuestion.usesCommuneSelector
             "
           >
@@ -101,7 +137,7 @@
           </div>
 
           <!-- Back Button -->
-          <button @click="previousQuestion" class="btn-return" v-if="canGoBack">
+          <button v-if="canGoBack" @click="previousQuestion" class="btn-return">
             Retour
           </button>
         </div>
@@ -147,10 +183,9 @@ const freeTextAnswer = ref("");
 const questionPath = ref(["Q1"]);
 const isEnqueteurSaved = ref(false);
 const isSurveyComplete = ref(false);
-const selectedCommune = ref("");
 const stationInput = ref("");
 const filteredStations = ref([]);
-
+const multipleAnswers = ref([]);
 const communeSelections = ref({});
 const postalCodePrefixes = ref({});
 
@@ -195,7 +230,35 @@ const currentQuestion = computed(() => {
 });
 
 // Methods
+const handleMultipleAnswers = () => {
+  if (currentQuestion.value) {
+    let answerString = "";
+    currentQuestion.value.options.forEach((option, index) => {
+      answerString += `${index + 1}:${
+        multipleAnswers.value.includes(option.id) ? 1 : 0
+      }`;
+      if (index < currentQuestion.value.options.length - 1) {
+        answerString += ",";
+      }
+    });
 
+    // Store the answer string directly
+    answers.value[currentQuestion.value.id] = answerString;
+
+    // Check if "Autre" is selected
+    if (multipleAnswers.value.includes(6)) {
+      nextQuestion("Q7Precision");
+    } else {
+      nextQuestion("Q8");
+    }
+
+    // Clear selections for next time
+    multipleAnswers.value = [];
+
+    // Log the stored answer for verification
+    console.log("Stored Q7 answer:", answers.value[currentQuestion.value.id]);
+  }
+};
 
 const currentQuestionOptions = computed(() => {
   if (
@@ -258,8 +321,8 @@ const logAnswers = () => {
 const selectAnswer = (option) => {
   if (currentQuestion.value) {
     answers.value[currentQuestion.value.id] = option.id;
-  
-     if (option.next === "end") {
+
+    if (option.next === "end") {
       finishSurvey();
     } else {
       nextQuestion(option.next);
@@ -385,7 +448,6 @@ const finishSurvey = async () => {
   } catch (error) {
     console.error("Error saving survey data:", error);
   }
-
 };
 
 // Update the resetSurvey function
@@ -438,22 +500,16 @@ body {
   color: white;
 }
 
-/* Center the Start Survey button horizontally and vertically */
 .start-survey-container {
   justify-content: center;
-  /* Center horizontally */
   align-items: center;
-  /* Center vertically */
   height: 50vh;
-  /* Full viewport height */
   width: 100%;
-  /* Full width */
   margin-bottom: 5%;
 }
 
 .content-container {
   flex-grow: 1;
-  /* This allows the content to take up available space */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -463,7 +519,6 @@ body {
   margin: 0 auto;
   box-sizing: border-box;
   overflow-y: auto;
-  /* Allow scrolling if content overflows */
 }
 
 .question-container {
@@ -474,9 +529,7 @@ body {
 .input-container {
   display: flex;
   justify-content: center;
-  /* Center horizontally */
   width: 100%;
-  /* Take full width of the parent */
 }
 
 h2 {
@@ -487,7 +540,6 @@ h2 {
 .form-control {
   width: 100%;
   max-width: 400px;
-  /* Maximum width of the input */
   padding: 10px;
   border-radius: 5px;
   border: 1px solid white;
@@ -514,12 +566,19 @@ h2 {
 }
 
 .btn-next {
-  background-color: green;
+  background-color: #2ea44f;  /* This is your app's green color */
+  width: 400px;  /* Match width with other elements */
+}
+
+.btn-next:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
 }
 
 .btn-return {
   background-color: grey;
-  margin-top: 30px;
+  width: 400px;  /* Match width with other elements */
+  margin-top: 15px;  /* Adjust spacing */
 }
 
 .btn-option {
@@ -541,29 +600,9 @@ h2 {
   width: 100%;
   box-sizing: border-box;
   position: relative;
-  /* Keep the footer relative to its parent */
 }
 
-.btn-download {
-  background-color: #ffffff;
-  color: #4c4faf;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: bold;
-  padding: 10px 20px;
-  border-radius: 25px;
-  transition: all 0.3s ease;
-  margin-bottom: 15px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.doc-count {
-  font-size: 14px;
-  opacity: 0.9;
-}
-
+/* Progress bar */
 .progress-bar {
   width: 100%;
   height: 10px;
@@ -579,6 +618,61 @@ h2 {
   transition: width 0.3s ease-in-out;
 }
 
+/* Multiple choice container styles */
+.multiple-choice-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+}
+
+/* Add these rules here */
+.multiple-choice-container .btn-next {
+  background-color: #4caf50;
+  width: 400px;
+  margin: 15px auto;
+}
+
+.multiple-choice-container .btn-return {
+  width: 400px;
+  margin: 15px auto;
+}
+
+.option-wrapper {
+  width: 100%;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  background-color: #4a5a83;
+  border-radius: 8px;
+  padding: 15px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.checkbox-label:hover {
+  background-color: #5b6b94;
+}
+
+.checkbox-input {
+  margin-right: 15px;
+  margin-top: 3px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.option-text {
+  color: white;
+  flex: 1;
+  line-height: 1.4;
+}
+
+/* Commune selector */
 .commune-dropdown {
   max-height: 200px;
   overflow-y: auto;
@@ -594,6 +688,7 @@ h2 {
   background-color: #f0f0f0;
 }
 
+/* Responsive styles */
 @media screen and (max-width: 768px) {
   .question-container {
     margin-bottom: 20px;
@@ -608,95 +703,9 @@ h2 {
   }
 }
 
-/* Ensure responsive centering */
 @media screen and (max-width: 480px) {
   .form-control {
     max-width: 100%;
-    /* Ensure full width on small screens */
   }
-}
-.btn-pdf {
-  background-color: #ff9800;
-  /* Orange color to make it distinct */
-  color: white;
-  padding: 15px;
-  margin: 10px 0;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  width: 100%;
-  max-width: 400px;
-  text-align: center;
-  transition: background-color 0.3s;
-}
-
-.btn-pdf:hover {
-  background-color: #f57c00;
-  /* Darker orange on hover */
-}
-
-.modal {
-  display: flex;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.4);
-  justify-content: center;
-  align-items: center;
-}
-
-.modal-content {
-  background-color: #fefefe;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 90%;
-  max-width: 800px;
-  position: relative;
-}
-
-.pdf-content {
-  height: 80vh;
-  display: flex;
-  flex-direction: column;
-}
-
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-  cursor: pointer;
-  position: absolute;
-  right: 10px;
-  top: 5px;
-}
-
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-/* Ensure the PDF fits within the modal */
-.pdf-content iframe {
-  flex-grow: 1;
-  border: none;
-  margin-top: 20px;
-}
-
-/* Add these new styles */
-.precision-input {
-  margin-top: 15px;
-}
-
-.precision-input h3 {
-  font-size: 1.1em;
-  margin-bottom: 10px;
 }
 </style>
