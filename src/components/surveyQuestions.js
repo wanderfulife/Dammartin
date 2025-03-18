@@ -8,12 +8,12 @@ export const questions = [
 		options: [
 			{ id: 1, text: "Saint-Mard", next: "Q2" },
 			{ id: 2, text: "Juilly", next: "Q2" },
-			{ id: 3, text: "Dammartin-en-Goële", next: "Q2" },
+			{ id: 3, text: "-en-Goële", next: "Q2" },
 			{ id: 4, text: "Longperrier", next: "Q2" },
 			{ id: 5, text: "Rouvres", next: "Q2" },
 			{ id: 6, text: "Othis", next: "Q2" },
 			{ id: 7, text: "Saint Pathus", next: "Q2" },
-			{ id: 8, text: "Villeneuve-sous-Dammartin", next: "Q2" },
+			{ id: 8, text: "Villeneuve-sous-", next: "Q2" },
 			{ id: 9, text: "Lagny-le-Sec", next: "Q2" },
 			{ id: 10, text: "Le Plessis-Belleville", next: "Q2" },
 			{ id: 11, text: "Autre: Précisez la ville", next: "Q1P" }
@@ -58,7 +58,7 @@ export const questions = [
 		freeText: true,
 		next: "Q4"
 	},
-	
+
 	{
 		id: "Q4",
 		text: "Si vous êtes venus en bus, préciser la ligne de bus utilisée : ",
@@ -107,14 +107,14 @@ export const questions = [
 		text: "Si vous êtes venus en voiture comme conducteur et que vous ne stationnez pas dans un des trois parkings relais. Pour quelle raison n'utilisez vous pas les parkings relais (choix multiples) ?",
 		allowMultiple: true,
 		options: [
-		  { id: 1, text: "Manque de place de stationnement disponible", next: "Q8" },
-		  { id: 2, text: "Absence d'abonnement disponible", next: "Q8" },
-		  { id: 3, text: "Pas d'abonnement Navigo annuel permettant d'accéder gratuitement aux parkings", next: "Q8" },
-		  { id: 4, text: "Coût du stationnement", next: "Q8" },
-		  { id: 5, text: "Dysfonctionnement technique", next: "Q8" },
-		  { id: 6, text: "Autre", next: "Q7Precision" }
+			{ id: 1, text: "Manque de place de stationnement disponible", next: "Q8" },
+			{ id: 2, text: "Absence d'abonnement disponible", next: "Q8" },
+			{ id: 3, text: "Pas d'abonnement Navigo annuel permettant d'accéder gratuitement aux parkings", next: "Q8" },
+			{ id: 4, text: "Coût du stationnement", next: "Q8" },
+			{ id: 5, text: "Dysfonctionnement technique", next: "Q8" },
+			{ id: 6, text: "Autre", next: "Q7Precision" }
 		]
-	  },
+	},
 	{
 		id: "Q7Precision",
 		text: "Précisez",
@@ -128,7 +128,7 @@ export const questions = [
 			{ id: 1, text: "Courte durée (<2h)", next: "Q11" },
 			{ id: 2, text: "Moyenne durée (2 à 6h)", next: "Q11" },
 			{ id: 3, text: "Longue durée (>6h)", next: "Q11" },
-			{ id: 4, text: "Très longue durée (>12h)", next: "Q11" }	
+			{ id: 4, text: "Très longue durée (>12h)", next: "Q11" }
 		]
 	},
 	{

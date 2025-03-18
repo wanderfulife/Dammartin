@@ -69,7 +69,7 @@ const totalSurveys = ref(0);
 const surveysByEnqueteur = ref({});
 const surveysByType = ref({});
 
-const surveyCollectionRef = collection(db, "Dammartin");
+const surveyCollectionRef = collection(db, "T10");
 
 const signIn = () => {
   // Implement your sign-in logic here
@@ -155,7 +155,7 @@ const downloadData = async () => {
     XLSX.utils.book_append_sheet(workbook, worksheet, "Survey Data");
 
     const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
-    XLSX.writeFile(workbook, `Dammartin_Survey_Data_${timestamp}.xlsx`);
+    XLSX.writeFile(workbook, `T10_Survey_Data_${timestamp}.xlsx`);
 
     console.log("File downloaded successfully");
   } catch (error) {

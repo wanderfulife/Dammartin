@@ -190,8 +190,8 @@ const communeSelections = ref({});
 const postalCodePrefixes = ref({});
 
 // Firestore refs
-const surveyCollectionRef = collection(db, "Dammartin");
-const counterDocRef = doc(db, "counterDammartin", "surveyCounter");
+const surveyCollectionRef = collection(db, "T10");
+const counterDocRef = doc(db, "counterT10", "surveyCounter");
 
 const currentQuestion = computed(() => {
   if (
@@ -478,7 +478,7 @@ const getNextId = async () => {
 
   await setDoc(counterDocRef, { value: counter });
 
-  return `Dammartin-${counter.toString().padStart(6, "0")}`;
+  return `T10-${counter.toString().padStart(6, "0")}`;
 };
 </script>
 
